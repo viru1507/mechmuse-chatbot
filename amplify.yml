@@ -1,0 +1,23 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - yum install -y python3 python3-pip
+        - pip3 install --upgrade pip
+        - pip3 install -r requirements.txt
+    build:
+      commands:
+        - echo "Starting Streamlit app build"
+        - mkdir -p public
+        - echo '<html><head><meta http-equiv="refresh" content="0;URL=\'https://${AWS_AMPLIFY_APP_ID}.amplifyapp.com:8501\'"/></head><body>Redirecting to Streamlit app...</body></html>' > public/index.html
+  artifacts:
+    baseDirectory: public
+    files:
+      - '**/*'
+backend:
+  phases:
+    build:
+      commands:
+        - echo "Starting Streamlit server"
+        - streamlit run app.py --server.port=8501 --server.address=0.0.0.0 &
