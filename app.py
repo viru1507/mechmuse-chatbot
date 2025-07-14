@@ -3,6 +3,7 @@ import requests
 import json
 import base64
  
+ 
 # Custom CSS for better appearance
 def apply_custom_css():
     st.markdown("""
